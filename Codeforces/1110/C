@@ -1,0 +1,55 @@
+/* 
+  Abhishek Ranjan
+  NITK Surathkal
+*/
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+ll find_ans(ll a){
+    if(a==1){
+        return 1;
+    }
+    ll b=a;
+    ll ans=0,p=1;
+    while(a){
+        if((a&1)==0){
+            ans+=(ll)(p);
+        }
+        a=(a>>1);
+        p*=2;
+    }
+    if(ans==0){
+        a=b;
+        ll div=0;
+        for(ll i=1;i*i<=a;i++){
+            if(a%i==0){
+                if(i*i!=a){
+                    div=max(div,i);
+                    if(i!=1){
+                        div=max(div,a/i);
+                    }
+                }
+                else{
+                    div=max(div,i);
+                }
+            }
+        }
+        return div;
+    }
+    return ans^b;
+}
+
+int main() {
+
+    ll q;
+    cin>>q;
+    ll a[q];
+    for(ll i=0;i<q;i++){
+        cin>>a[i];
+        cout<<find_ans(a[i])<<endl;
+    }
+
+    
+
+}
