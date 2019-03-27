@@ -1,0 +1,90 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+ll N(string s,ll j){
+    ll ans=0;
+    while(s[j]){
+        ans=ans*10+s[j]-'0';
+        j++;
+    }
+    return ans;
+}
+ll dp[10000][2];
+ll power(ll a,ll b){
+    if(b==0) return 1;
+    ll s=power(a,b/2);
+    s*=s;
+    if(b&1) return s*a;
+    return s;
+}
+
+ll solve(ll pos,bool smaller,string s){
+    if(pos==s.length()){
+        return 0;
+    }
+    if(dp[pos][smaller]!=-1) return dp[pos][smaller];
+    ll ans=0;
+    if(smaller==1){
+        for(ll i=0;i<=s[pos]-'0';i++){
+            if(i==(s[pos]-'0')){
+                ans+=solve(pos+1,1,s)+i*(N(s,pos+1)+1);
+            }
+            else{
+                ans+=solve(pos+1,0,s)+i*(power(10,s.length()-pos-1));
+            }
+        }
+    }
+    else{
+        for(ll i=0;i<=9;i++){
+            ans+=solve(pos+1,0,s)+i*(power(10,s.length()-1-pos));
+        }
+    }
+    return dp[pos][smaller]=ans;
+
+}
+
+string str(ll a){
+    string s;
+    s.clear();
+    if(a==0){
+        s.push_back(0+48);
+        return s;
+    }
+    while(a){
+        s.push_back(a%10+48);
+        a/=10;
+    }
+    ll i=0,j=s.length()-1;
+    while(i<=j){
+        swap(s[i],s[j]);
+        i++;
+        j--;
+    }
+    return s;
+}
+
+ll sum(string s){
+    ll ans=0;
+    for(char i:s){
+        ans+=i-'0';
+    }
+    return ans;
+}
+
+int main(){
+
+    ll tt;
+    cin>>tt;
+    while(tt--){
+        ll a,b;
+        cin>>a>>b;
+        memset(dp,-1,sizeof(dp));
+        ll ans=0;
+        ans=solve(0,1,str(b));
+        memset(dp,-1,sizeof(dp));
+        ans-=solve(0,1,str(a));
+        cout<<ans+sum(str(a))<<endl;
+    }
+
+}
