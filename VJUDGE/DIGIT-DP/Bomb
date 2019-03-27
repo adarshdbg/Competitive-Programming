@@ -1,0 +1,88 @@
+// http://acm.hdu.edu.cn/showproblem.php?pid=3555
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll a,b,k;
+ll dp[100][2][20];
+
+ll N(string s,ll pos){
+    ll ans=0;
+    while(s[pos]){
+        ans=ans*10+s[pos]-'0';
+        pos++;
+    }
+    return ans;
+}
+
+ll solve(ll pos,bool smaller,ll last,string s){
+    // Base Case
+    if(pos==s.length()){
+        return 0;
+    }
+    if(dp[pos][smaller][last]!=-1){
+        return dp[pos][smaller][last];
+    }
+    // Rec Case
+    ll ans=0;
+    if(smaller==1){
+        for(ll i=0;i<=s[pos]-'0';i++){
+            if(i==s[pos]-'0'){
+                if(last==4 && i==9){
+                    ans+=solve(pos+1,1,9,s)+(pow(10,s.length()-pos-1));
+                }
+                else{
+                    ans+=solve(pos+1,1,i,s);
+                }
+            }
+            else{
+                if(last==4 && i==9){
+                    ans+=solve(pos+1,0,i,s)+1*(pow(10,s.length()-pos-1));
+                }
+                else
+                    ans+=solve(pos+1,0,i,s);
+            }
+        }
+    }
+    else{
+        for(ll i=0;i<=9;i++){
+            ans+=solve(pos+1,0,i,s)+(last==4 && i==9)*(pow(10,s.length()-pos-1));
+        }
+    }
+    return dp[pos][smaller][last]=ans;
+}
+
+string str(ll a){
+
+    string s;
+    if(a==0){
+        s.push_back(0+48);
+        return s;
+    }
+    while(a){
+        s.push_back(a%10+48);
+        a/=10;
+    }
+    ll i=0,j=s.length()-1;
+    while(i<=j){
+        swap(s[i],s[j]);
+        i++;
+        j--;
+    }
+    return s;
+}
+
+int main(){
+
+    ll tt;
+    cin>>tt;
+    while(tt--){
+        ll n;
+        cin>>n;
+
+        ll ans=0;
+        memset(dp,-1,sizeof(dp));
+        cout<<solve(0,1,-1,str(n))<<endl;
+    }
+
+}
