@@ -1,0 +1,65 @@
+/*
+  Abhishek Ranjan
+  17CO203,NITK Surathkal
+ */
+
+#include<bits/stdc++.h>
+#include<vector>
+using namespace std;
+#define pb(i) push_back(i)
+#define ll long long 
+#define MAX (ll)(1e6+1)
+ll p[MAX];
+vector<ll> v;
+void solve() {
+	p[2] = 1;
+	v.pb(2);
+	for (ll i = 3; i < MAX; i += 2) {
+		p[i] = 1;
+	}
+	for (ll i = 3; i*i < MAX; i += 2) {
+		if (p[i]) {
+			for (ll j = i * i; j < MAX; j += 2 * i) {
+				p[j] = 0;
+			}
+			
+		}
+	}
+	for (ll i = 3; i < MAX; i++) {
+		if (p[i])v.pb(i);
+	}
+}
+
+int main() {
+	ios::sync_with_stdio(NULL);
+	cin.tie(0);
+	ll l, r;
+	cin >> l >> r;
+	solve();
+	ll b[MAX]{ 0 };
+	//ll ans = 0;
+	// Now, we have all the primes in vector v ranging from 1 to 10^6
+	ll a[MAX];
+	for (ll i = l; i <= r; i++)a[i - l] = i;
+	for (ll i : v) {
+		for (ll j = (ll)(ceil((1.0*l)/ i))*i; j <=r; j += i) {
+			while (a[j-l] % i == 0) {
+				a[j - l] /= i;
+				b[j - l]++;
+			}
+		}
+	}
+    // cout<<"Abhishek Ranjan\n";
+	for (ll i = l; i <= r; i++) {
+		if (a[i - l] != 1) b[i - l]++;
+	}
+	ll ans = 0;
+
+	for (ll i = l; i <= r; i++) {
+		if (p[b[i - l]])
+			ans++;
+	}
+
+	cout << ans << endl;
+
+}
