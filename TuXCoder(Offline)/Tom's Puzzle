@@ -6,7 +6,6 @@
 #define int long long
 using namespace std;
 
-//
 vector<int>a;
 vector<pair<int,int > >b;
 int32_t main(){
