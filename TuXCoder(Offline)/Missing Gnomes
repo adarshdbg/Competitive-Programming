@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long 
+
+
+
+int main(){
+	
+	ll n,m;
+	cin>>n>>m;
+	vector<ll> v;
+	map<ll,ll> ma;
+	for(ll i=0;i<m;i++){
+		ll x;
+		cin>>x;
+		ma[x]++;
+		v.push_back(x);
+	}
+
+	vector<ll> total;
+	for(ll i=1;i<=n;i++){
+		if(ma.count(i)==0)total.push_back(i);
+	}
+
+	sort(total.begin(),total.end());
+	ll j=0;
+	vector<ll> ans;
+	for(ll i:total){
+		if(i<v[0])ans.push_back(i);
+		else break;
+		j++;
+	}
+
+	ans.push_back(v[0]);
+	ll k=1;
+	for(ll i=1;i<v.size();i++){
+		// Pushback all the numbers less than v[i]
+		while(j<total.size() && total[j]<v[i]){
+			ans.push_back(total[j++]);
+		}
+		ans.push_back(v[i]);
+	}
+
+	while(j<total.size()){
+		ans.push_back(total[j++]);
+	}
+
+	for(ll i:ans){
+		cout<<i<<endl;
+	}
+	//cout<<endl;
+
+}
