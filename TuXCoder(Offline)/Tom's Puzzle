@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+
+//
+vector<int>a;
+vector<pair<int,int > >b;
+int32_t main(){
+	ios::sync_with_stdio(NULL);
+	//cin.tie(0);
+	int t;
+	cin>>t;
+	while(t--){
+		int n;
+		cin>>n;
+		a.resize(n+1);
+		b.clear();
+		b.push_back({10000000000,0});
+		for(int i=1;i<=n;i++){
+			cin>>a[i];
+		}
+		int sum=0;
+		for(int i=1;i<=n;i++){
+			if(b.size()==0){
+				b.push_back({a[i],i});
+			}
+			else{
+			while(b.size()!=0 && b[b.size()-1].first<=a[i]){
+				b.pop_back();
+				}
+			b.push_back({a[i],i});
+			}
+		//cout<<i<<" "<<b.size()<<"\n";
+		int ans=b[b.size()-1].second-b[b.size()-2].second;
+		//cout<<i<<" "<<ans<<"\n";
+		sum+=ans;
+		}
+		cout<<sum<<"\n";
+
+	}
+
+	return 0;
+}
