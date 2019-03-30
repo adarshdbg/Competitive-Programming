@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define sz(a) ((ll)a.size())
+const ll mod=1e9+7;
+
+int main(){
+
+    ll  tt;
+    cin>>tt;
+    while(tt--){
+        string s;
+        cin>>s;
+        set<ll> X;
+        vector<ll> a;
+        for(ll i=0;s[i];i++){
+            X.insert(s[i]-'0');
+            
+            ll j=i+1;
+            while(s[j] && s[j]==s[i]) j++;
+            j--;
+            i=j;
+            a.push_back(s[i]-'0');
+        }
+        
+        ll dp[(1<<12)][200];
+        memset(dp,-1,sizeof(dp));
+        function<ll(ll,ll)> solve=[&](ll mask,ll i){
+            ll &res=dp[mask][i];
+            if(res!=-1) return res;
+            bool flag=1;
+            for(ll y:X){
+                if(mask&(1<<y)){
+                    continue;
+                }
+                else{
+                    flag=0;
+                    break;
+                }
+            }
+            if(flag)return res=1;
+            set<ll> distinct;
+            ll ans=0;
+            for(ll j=i;j<a.size();j++){
+                if(mask&(1<<a[j]))continue;
+                if(distinct.count(a[j]))continue;
+                distinct.insert(a[j]);
+                ans+=solve(mask|(1<<a[j]),j+1);
+            }
+            return res=ans;
+        };
+        cout<<solve(0,0)<<endl;
+    }
+
+}
+
