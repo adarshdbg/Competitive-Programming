@@ -1,5 +1,8 @@
 // Complexity --> O(N*(sqrt(min(A[i]))))
-
+/*
+  Abhishek Ranjan
+  17CO203,NITK Surathkal
+ */
 #include<bits/stdc++.h>
 #define int long long
 using namespace std;
