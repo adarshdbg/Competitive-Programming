@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+const ll mod = 1e9 + 7;
+
+ll power(ll a, ll b) {
+	if (b == 0) {
+		return 1;
+	}
+	ll s = power(a, b / 2);
+	s *= s;
+	if (b & 1) return (s*a);
+	return s;
+}
+
+int main() {
+
+	ll a, b, c;
+	cin >> a >> b >> c;
+	map<ll, ll> m;
+	m[a]++;
+	m[b]++;
+	m[c]++;
+	if (m[5] == 2 && m[7] == 1) {
+		cout << "YES" << endl;
+	}
+	else {
+		cout << "NO" << endl;
+	}
+
+}
