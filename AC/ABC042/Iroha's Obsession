@@ -1,0 +1,88 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+const ll mod = 1e9 + 7;
+
+ll power(ll a, ll b) {
+	if (b == 0) {
+		return 1;
+	}
+	ll s = power(a, b / 2);
+	s *= s;
+	if (b & 1) return (s*a);
+	return s;
+}
+
+ll a[10];
+ll b[10];
+ll n;
+map<ll,ll> m;
+ll ans=1e18;
+
+bool isposs(ll c){
+    while(c){
+        if(m[c%10]!=0){
+            return false;
+        }
+        c/=10;
+    }
+    return true;
+}
+
+ll find_num(ll s){
+    ll answer=0;
+    for(ll i=0;i<s;i++){
+        answer=answer*10+b[i];
+    }
+    return answer;
+}
+
+
+void solve(ll i,ll size){
+    if(i==size){
+        ll num=find_num(size);
+        if(num>=n && isposs(num))
+            ans=min(ans,num);
+        return ;
+    }
+    for(ll k=i;k<size;k++){
+        swap(b[i],b[k]);
+        solve(i+1,size);
+        swap(b[i],b[k]);
+    }
+    return;
+}
+
+ll Size(ll a){
+    ll ans=0;
+    while(a){
+        ans++;
+        a/=10;
+    }
+    return ans;
+}
+
+int main() {
+
+	// ll n;
+    cin>>n;
+    ll k;
+    cin>>k;
+    for(ll i=0;i<10;i++){
+        b[i]=i;
+    }
+    for(ll i=0;i<k;i++){
+        cin>>a[i];
+        m[a[i]]++;
+    }
+    ans=-1;
+    while(ans==-1){
+        if(isposs(n)){
+            ans=n;
+            break;
+        }
+        n++;
+    }
+    cout<<ans<<endl;
+}
