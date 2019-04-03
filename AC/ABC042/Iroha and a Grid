@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+const ll mod=1e9+7;
+
+ll power(ll a,ll b){
+    if(b==0){
+        return 1;
+    }
+    ll s=power(a,b/2);
+    s*=s;
+    s%=mod;
+    if(b&1)return (s*a)%mod;
+    return s%mod;
+}
+
+ll inv(ll a){
+    return power(a,mod-2);
+}
+
+ll f[10000000]{0};
+ll C(ll a,ll b){
+
+    if(a<b){
+        return 0;   
+    }
+
+    ll ans=1;
+    ans=f[a];
+    ans*=(inv(f[b]));
+    ans%=mod;
+    ans*=(inv(f[a-b]));
+
+    return ans%mod;
+
+}
+
+int main() {
+    // cout<<"Hello World!"
+    f[0]=1;
+    for(ll i=1;i<=1e6-1;i++){
+        f[i]=f[i-1]*i;
+        f[i]%=mod;
+    }
+    ll h,w,a,b;
+    cin>>h>>w>>a>>b;
+
+    ll ans=C(h+w-2,h-1);
+    // cout<<ans<<endl;
+    ll ans1=0;
+    for(ll i=h-a+1;i<=h;i++){
+        ans1+=(C(i+b-2,b-1)*C(h-i+1 - 2+w-b,w-b-1))%mod;
+        ans1%=mod;
+    }
+    ans-=ans1;
+    ans%=mod;
+    ans=(ans+mod)%mod;
+    cout<<ans<<endl;
+}
