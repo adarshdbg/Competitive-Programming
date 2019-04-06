@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+const ll mod=1e9+7;
+
+string newstring(string s){
+    string v;
+    v.push_back('#');
+    for(ll i=0;s[i];i++){
+        v.push_back(s[i]);
+        v.push_back('#');
+    }
+    return v;
+}
+
+ll longest_pal_substring(string s){
+    ll C=0,R=0;
+    ll ans=0;
+    s=newstring(s);
+    ll p[s.length()+1]{0};
+    for(ll i=1;s[i+1];i++){
+        ll i_mirror=C-(i-C);
+        if(R>i){
+            p[i]=min(R-i,p[i_mirror]);
+        }
+        else{
+            p[i]=0;
+        }
+        while(s[i+1+p[i]]==s[i-1-p[i]]){
+            p[i]++;
+        }
+        if(i+p[i]>R){
+            C=i;
+            R=i+p[i];
+        }
+    }
+    ll center=0;
+    for(ll i=1;i<s.size()-1;i++){
+        if(p[i]>ans){
+            ans=p[i];
+            center=i;
+        }
+    }
+    
+    return ans;// for length
+    // for substring return s.substr((center-1-ans)/2,ans);
+}
+
+int main() {
+
+
+
+}
