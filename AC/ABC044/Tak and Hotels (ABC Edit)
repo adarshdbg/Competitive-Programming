@@ -1,0 +1,18 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+const ll mod = 1e9+7;
+
+
+int main() {
+
+    ll n,k,x,y;
+    cin>>n>>k>>x>>y;
+    if(n<=k){
+        cout<<n*x<<endl;
+        return 0;
+    }
+    cout<<k*x + (n-k)*y<<endl;
+
+}
