@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+int main(){
+
+    string a,b,c;
+    cin>>a>>b>>c;
+
+    ll ind=0;
+    stack<char> s,d,e,f;
+    for(ll i=a.length()-1;i>=0;i--){
+        s.push(a[i]);
+        d.push(a[i]);
+    }
+    for(ll i=b.length()-1;i>=0;i--){
+        e.push(b[i]);
+    }
+    for(ll i=c.length()-1;i>=0;i--){
+        f.push(c[i]);
+    }
+    bool flag=false;
+    while(s.empty()==0){
+        ll ind1=s.top()-'a'+1;
+        flag=true;
+        s.pop();
+        if(ind==0){
+            d=s;
+        }
+        else if(ind==1){
+            e=s;
+        }
+        else{
+            f=s;
+        }
+        if(ind1==1){
+            s=d;
+            ind=0;
+        }
+        else if(ind1==2){
+            s=e;
+            ind=1;
+        }
+        else{
+            ind=2;
+            s=f;
+        }
+    }
+    
+    if(ind==0){
+        cout<<'A'<<endl;
+    }
+    else if(ind==1){
+        cout<<'B'<<endl;
+    }
+    else{
+        cout<<'C'<<endl;
+    }
+
+}
