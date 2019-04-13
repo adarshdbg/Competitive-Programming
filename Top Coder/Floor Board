@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+ll r,c;
+string s[13];
+ll dp[1000000][13];
+ll solve(ll mask,ll i){
+
+    if(i==r){
+        // cout<<1<<endl;
+        return 0;
+    }
+    if(dp[i][mask]!=-1){
+        return dp[i][mask];
+    }
+    ll curr_mask=0;
+    ll ans=INT_MAX;
+    bool isvalid=true;
+    for(ll j=0;j<(1<<c);j++){
+        // Check whether the current mask is valid or not 
+        for(ll k=0;k<c;k++){
+            if(((j>>k)&1) && s[i][k]=='#'){
+                isvalid=false;
+                break;
+            } 
+        }
+        if(isvalid==false){
+            continue;
+        }
+        bool ishor=false;
+        
+        // Calculate for the current mask
+        // Compute the vertical and horizantal walls used
+        ll hor=0,ver=0;
+        for(ll k=0;k<c;k++){
+            if((j>>k)&1){
+                ishor=false;
+                if(((mask>>k)&1)==0){
+                    ver++;
+                }
+            }
+            else{
+                // Else we have to use horizontal strips
+                if(s[i][k]=='#'){
+                    ishor=false;
+                }
+                else{
+                    if(!ishor){
+                        ishor=true;
+                        hor++;
+                    }
+                }
+            }
+        }
+        ans=min(ans,ver+hor+solve(j,i+1));
+
+    }
+    return dp[i][mask]=ans;
+}
+
+
+int main() {
+    memset(dp,-1,sizeof(dp));
+    
+    cin>>r>>c;
+    for(ll i=0;i<r;i++){
+        for(ll j=0;j<c;j++){
+            cin>>s[i][j];
+        }
+    }
+
+    ll ans=solve(0,0);
+    cout<<ans<<endl;
+
+}
