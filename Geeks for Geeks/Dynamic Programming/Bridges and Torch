@@ -1,3 +1,8 @@
+/*
+    Time Complexity :: O(2^n *n*n)
+    Space Complexity :: O(2^n)
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 
