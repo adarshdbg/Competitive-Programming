@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+int row,col;
+int mat[1000][1000];
+int pre[1000][1000];
+pair<int,int> x,y;
+bool flag=0;
+int solve(){
+    
+    for(int i=0;i<col;i++){
+        for(int j=i;j<col;j++){
+            // Taking two columns i and j 
+            int max_sum=0,s=0;
+            map<int,int> m;
+            for(int k=0;k<row;k++){
+                s+=(i==0)?pre[k][j]:pre[k][j]-pre[k][i-1];
+                if(i==1 && j==2){
+                    cout<<s<<" ";
+                }
+                if(s==0){
+                    x=make_pair(0,i);
+                    y=make_pair(k,j);
+                    flag=true;
+                    return 0;
+                }
+                if(m.count(s)){
+                    // cout<<i<< " "<<j<<" "<<s<<endl;
+                    // (m[-s],i) & (k,j)
+                    x=make_pair(m[-s]+1,i);
+                    y=make_pair(k,j);
+                    flag=1;
+                    return 0;
+                }
+                
+                m[s]=k;
+            }
+            // cout<<endl;
+        }
+    }
+    
+}
+
+int main() {
+	
+	
+	cin>>row>>col;
+	for(int i=0;i<row;i++){
+	    for(int j=0;j<col;j++){
+	        cin>>mat[i][j];
+	        if(j==0){
+	            pre[i][j]=mat[i][j];
+	        }
+	        else{
+	            pre[i][j]=pre[i][j-1]+mat[i][j];
+	        }
+	    }
+	}
+	
+	solve();
+	if(!flag){
+	    cout<<-1<<endl;
+	    return 0;
+	}
+	
+	for(int i=x.first;i<y.first+1;i++){
+	    for(int j=x.second;j<=y.second;j++){
+	        cout<<mat[i][j]<<" ";
+	    }
+	    cout<<endl;
+	}
+	
+	
+	return 0;
+}
