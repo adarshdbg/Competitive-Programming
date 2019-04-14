@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+char board[1000][1000];
+
+// int dp[1000][1000];
+int r,c;
+
+int solve(int a,int b,int x,int y,map<pair<pair<int,int>,pair<int,int>> ,int> &m){
+    // Base Case
+    // 1. All indices are in the range 
+    if(a>r || b<0 || x>c || y<0||x<0){
+        return 0;
+    }
+    // 2. Upper Co-ordinate is behind the lower Co-ordinate 
+    if(x<a || b>y){
+        return 0;
+    }
+    // Rec Case
+    if(board[a][b]!=board[x][y]){
+        return 0;
+    }
+    int res=m[make_pair(make_pair(a,b),make_pair(x,y))];
+    if(res){
+        return res;
+    }
+    if(abs(a-x)+abs(b-y)<=1){
+        return res=1;
+    }
+    res+=solve(a+1,b,x-1,y,m)+solve(a+1,b,x,y-1,m)+solve(a,b+1,x-1,y,m)+solve(a,b+1,x,y-1,m);
+    return res;
+}
+
+int main() {
+    
+    int tt;
+    cin>>tt;
+    while(tt--){
+        cin>>r>>c;
+        // memset(dp,-1,sizeof(dp));
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                cin>>board[i][j];
+            }
+        }
+        map<pair<pair<int,int>,pair<int,int>> ,int> m;
+        m.clear();
+        cout<<solve(0,0,r-1,c-1,m)<<endl;
+    }
+    
+	return 0;
+}
