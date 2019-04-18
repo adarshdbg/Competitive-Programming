@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+// #define pair pair<ll,ll> 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+
+const ll mod =1e9+7;
+
+
+
+
+int main(){
+
+    string s;
+    cin>>s;
+    ll g=0,p=0;
+    ll ans=0;
+    for(ll i=0;s[i];i++){
+        if(g>p){
+            p++;
+            ans+=(s[i]=='g');
+        }
+        else{
+            g++;
+            ans-=(s[i]=='p');
+        }
+    }
+    cout<<ans<<endl;
+}
