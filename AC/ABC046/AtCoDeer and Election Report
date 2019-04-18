@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+// #define pair pair<ll,ll> 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+
+const ll mod =1e9+7;
+
+
+
+int main(){
+
+	ll n;
+    cin>>n;
+    pair<ll,ll> p[n];
+    for(ll i=0;i<n;i++){
+        cin>>p[i].first>>p[i].second;
+    }
+
+    ll x=p[0].first,y=p[0].second;
+    // cout<<x<<" "<<y<<endl;
+    for(ll i=1;i<n;i++){
+        ll a=p[i].first;
+        ll b=p[i].second;
+        ll c=a*y-b*x;
+        for(ll l=max(x/a,y/b);;l++){
+            ll X=l*a-x;
+            ll Y=l*b-y;
+            if(X>=0 && Y>=0){
+                x=a*l;
+                y=b*l;
+                // cout<<x<<" "<<y<<endl;
+                break;
+            }
+        }
+        
+    }
+    cout<<x+y<<endl;
+
+}
