@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+// #define pair pair<ll,ll> 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+
+const ll mod =1e9+7;
+ll n,k;
+ll f(){
+	ll ans=0;
+	ll dp[n+1][k+1];
+	ll sum[n+1]{0};
+	// for(int i=0;i<=k;i++){
+	// 	dp[0][i]=0;
+	// }
+	for(ll i=1;i<=n;i++){
+		for(ll j=1;j<=k;j++){
+            if(i==1){
+                dp[i][j]=1;
+            }
+            else
+			    dp[i][j]=sum[i-1]-dp[i-1][j];
+			sum[i]+=dp[i][j];
+		}
+	}
+	return sum[n];
+}
+
+
+int main(){
+
+	
+	cin>>n>>k;
+
+	ll ans=f();
+	cout<<ans<<endl;
+
+}
