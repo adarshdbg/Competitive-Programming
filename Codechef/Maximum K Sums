@@ -35,12 +35,11 @@ int main(){
 	S.insert(make_pair(pre[n],make_pair(1,n)));
 	while(k-- && !S.empty()){
 		auto top=*S.rbegin();
-        S.erase(top);
+        	S.erase(top);
 
 		ll L=top.second.first;
 		ll R=top.second.second;
 		ll sum=top.first;
-        cout<<sum<<" ";
 		if(L!=R){
 			S.push(make_pair(sum-a[L],make_pair(L+1,R)));
 			S.push(make_pair(sum-a[R],make_pair(L,R-1)));
