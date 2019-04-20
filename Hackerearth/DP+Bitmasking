@@ -1,0 +1,91 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+ll p[100000+2]{0};
+map<ll,vector<ll>> f;
+vector<ll> v;
+map<ll,ll> my;
+void prime_solve(){
+    p[2]=1;
+    for(ll i=2;i<=100000;i+=2){
+        f[i].push_back(2);
+    }
+    for(ll i=3;i<=100000;i+=2){
+        p[i]=1;
+    }
+
+    for(ll i=3;i*i<=100000;i+=2){
+        if(p[i]){
+            for(ll j=i*i;j<=100000;j+=2*i){
+                p[j]=0;
+            }
+            for(ll j=i;j<=100000;j+=i){
+                f[j].push_back(i);
+            }
+        }
+    }
+    ll cnt=0;
+    for(ll i=2;i<=50;i++){
+        if(p[i])v.push_back(i);
+        if(p[i]){
+            my[i]=cnt++;
+            // cout<<i<<" "<<my[i]<<endl;
+        }
+    }
+    for(ll i:v){
+        sort(f[i].begin(),f[i].end());
+    }
+    // cout<<p[47]<<" ";
+    // for(ll i:f[30]){
+    //     cout<<i<<" ";
+    // }
+
+}
+
+ll dp[51][(1<<16)];
+
+ll solve(ll *a,ll n,ll i,ll mask){
+    // Base Case
+    if(i==n){
+        return 0;
+    }
+    if(dp[i][mask]!=-1){
+        return dp[i][mask];
+    }
+    // Rec Case
+    ll ans=0;
+    ans=solve(a,n,i+1,mask);
+    ll t=mask;ll cnt=0;bool flag=true;
+    ll mask1=mask;
+    for(ll j:f[a[i]]){
+        if((mask&(1<<my[j]))){
+            flag=false;
+            break;
+        }
+        mask1=(mask1|(1<<my[j]));
+    }
+    if(flag){
+        ans=max(ans,1+solve(a,n,i+1,mask1));
+    }
+    return dp[i][mask]=ans;
+}
+
+int main() {
+
+    prime_solve();
+
+    ll tt;
+    cin>>tt;
+    while(tt--){
+        memset(dp,-1,sizeof(dp));
+        ll n;
+        cin>>n;
+        ll a[n];
+        for(ll i=0;i<n;i++){
+            cin>>a[i];
+        }
+        cout<<solve(a,n,0,0)<<endl;
+    }
+
+}
