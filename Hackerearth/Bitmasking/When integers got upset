@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+const ll mod = 1e9+7;
+map<ll,ll> m;
+// O(10*12*4096*12*12)-->
+ll p[13];
+ll dp[12][12][12][(1<<12)];
+
+ll f(ll *a,ll n,ll i,ll prev,ll prevv,ll mask){
+	// Base Case
+	if(i==n){
+		return 0;
+	}
+	if(dp[i][prev][prevv][mask]!=-1){
+		return dp[i][prev][prevv][mask];
+	}
+	// Rec Case
+	ll ans=INT_MAX;
+	for(ll j=0;j<n;j++){
+		// Place a[j] at ith item
+		if((mask&(1<<j))==0){
+			if(prev==12 || prevv==12){
+				ans=min(ans,f(a,n,i+1,j,prev,mask|(1<<j)));
+			}
+			else
+				ans=min(ans,f(a,n,i+1,j,prev,mask|(1<<j))+(a[j]^(m[prev]^m[prevv]))*p[i]);
+		}
+	}
+	return dp[i][prev][prevv][mask]=ans;
+}
+
+int main(){
+	
+	ll tt;
+	cin>>tt;
+	while(tt--){
+		ll n;
+		cin>>n;
+		ll a[n];
+        memset(dp,-1,sizeof(dp));
+		m.clear();
+		for(ll i=0;i<n;i++){
+			cin>>a[i];
+			m[i]=a[i];
+		}
+
+		
+		for(ll i=0;i<n;i++){
+			cin>>p[i];
+		}
+
+		cout<<f(a,n,0,12,12,0)<<endl;
+
+	}
+
+}
