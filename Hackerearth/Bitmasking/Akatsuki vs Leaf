@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+const ll mod = 1e9+7;
+
+pair<ll,ll> a[21],b[21];
+ll n;
+ll dp[21][(1<<21)];
+
+ll f(ll j,ll mask){
+    // Base Case
+    if(j==n){
+        return 0;
+    }
+
+    if(dp[j][mask]!=-1){
+        return dp[j][mask];
+    }
+
+    // Rec Case
+    ll ans=INT_MAX;
+    for(ll i=0;i<n;i++){
+        if((mask&(1<<i))==0){
+            ans=min(ans,f(j+1,(mask|(1<<i)))+abs(a[j].first-b[i].first)+abs(a[j].second-b[i].second));
+        }
+    }
+    // cout<<ans<<endl;
+    return dp[j][mask]=ans;
+
+}
+
+int main(){
+	
+	
+    cin>>n;
+    
+    for(ll i=0;i<n;i++){
+        cin>>a[i].first>>a[i].second;
+        // cout<<a[i].first<<" "<<a[i].second<<endl;
+    }
+    for(ll i=0;i<n;i++){
+        cin>>b[i].first>>b[i].second;
+        // cout<<b[i].first<<" "<<b[i].second<<endl;
+    }
+
+    memset(dp,-1,sizeof(dp));
+    cout<<f(0,0)<<endl;
+
+}
