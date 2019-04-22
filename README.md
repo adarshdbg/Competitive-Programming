@@ -2,6 +2,7 @@
 It includes solutions to both practice and contest problems from following platform:
 - Codechef
 - Atcoder
+- Google (Kickstart)
 - Hackerearth (TUX Coder)
 - Geeks For Geeks
 - Top Coder
