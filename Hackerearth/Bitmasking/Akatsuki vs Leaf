@@ -5,7 +5,7 @@ const ll mod = 1e9+7;
 
 pair<ll,ll> a[21],b[21];
 ll n;
-ll dp[21][(1<<21)];
+ll dp[21][(1<<20)];
 
 ll f(ll j,ll mask){
     // Base Case
