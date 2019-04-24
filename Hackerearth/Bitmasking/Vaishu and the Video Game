@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long 
+
+ll power(ll a,ll b){
+    if(b==0) return 1;
+    ll s=power(a,b/2);
+    s*=s;
+    if(b&1) return s*a;
+    return s;
+}
+
+const ll mod = 1e9+7;
+set<ll> s[100];
+ll l,n,m;
+ll t[10001]{0};
+map<pair<ll,ll> ,ll> M;
+ll y;
+
+ll count_bits(ll a){
+    ll ans=0;
+    while(a){
+        ans+=(a&1);
+        a>>=1;
+    }
+    return ans;
+}
+
+ll f(ll i,ll mask){
+    // Base Case
+    if(i==l){
+        return 0;
+    }
+    if(M.count(make_pair(i,mask))) return M[make_pair(i,mask)];
+    // Rec Case
+    ll ans=INT_MAX;
+    for(ll j=0;j<l;j++){
+        if((mask|t[j])!=mask){
+            ans=min(ans,power(s[j].size()-count_bits(mask&t[j]),m)+f(i+1,mask|t[j]));
+        }
+    }
+    if(ans==INT_MAX) return M[make_pair(i,mask)]=0;
+    return M[make_pair(i,mask)]=ans;
+}
+
+int main(){
+    
+    
+    
+    cin>>l>>n>>m;
+    M.clear();
+    // ll y=0;
+    for(ll i=0;i<l;i++){
+        ll x;
+        cin>>x;
+        for(ll j=0;j<x;j++){
+            ll a;
+            cin>>a;
+            y|=(1<<a);
+            s[i].insert(a);
+            t[i]|=(1<<a);
+        }
+        // cout<<s/()<<" ";
+    }
+    
+    // memset(dp,-1,sizeof(dp));
+    
+    cout<<f(0,0)<<endl;
+    
+}
