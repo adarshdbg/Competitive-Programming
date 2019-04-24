@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+const ll mod = 1e9+7;
+
+ll count_bit(ll a){
+    ll ans=0;
+    while(a){
+        ans+=(a&1);
+        a>>=1;
+    }
+    return ans;
+}
+
+ll inte(string a){
+    ll ans=0;
+    ll p=1;
+    for(ll i=a.length()-1;i>=0;i--){
+        ans=ans+p*(a[i]-'0');
+        p*=2;
+    }
+    return ans;
+}
+
+pair<ll,ll> dp[10001][1025];
+
+pair<ll,ll> f(pair<ll,string> *a,ll n,ll i,ll mask){
+    // Base Case
+    if(i==n){
+        return make_pair(count_bit(mask),0);
+    }
+    // Rec Case
+    if(dp[i][mask].first!=-1) return dp[i][mask];
+    pair<ll,ll> ans;
+    ans=f(a,n,i+1,mask);
+    pair<ll,ll> ans1=f(a,n,i+1,mask|inte(a[i].second));
+    ans1=make_pair(ans1.first,ans1.second+a[i].first);
+    pair<ll,ll> t;
+    if(ans1.first>ans.first){
+        t=ans1;
+    }
+    else{
+        if(ans1.first==ans.first){
+            if(ans1.second<ans.second)t=ans1;
+            else t=ans;
+        }
+        else
+            t=ans;
+    }
+    return dp[i][mask]=t;
+}
+
+int main(){
+    
+    ll n;
+    cin>>n;
+    pair<ll,string> a[n];
+    for(ll i=0;i<n;i++){
+        cin>>a[i].first>>a[i].second;
+    }
+    // cout<<count_bit(inte("110"))<<endl;
+    for(ll i=0;i<10001;i++){
+        for(ll j=0;j<1025;j++){
+            dp[i][j].first=dp[i][j].second=-1;
+        }
+    }
+    
+    cout<<f(a,n,0,0).second<<endl;
+    
+}
