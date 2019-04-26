@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+const ll mod = 1e9+7;
+
+
+
+int main() {
+
+    ll tt;
+    cin>>tt;
+    while(tt--){
+        ll n;
+        cin>>n;
+        ll a[n];
+        for(ll i=0;i<n;i++){
+            cin>>a[i];
+        }
+
+        ll b=INT_MIN,c=INT_MIN,d=INT_MIN;
+        ll ans=0;
+        for(ll i=0;i<n;i++){
+            if(a[i]>b){
+                d=c;
+                c=b;
+                b=a[i];
+            }
+            else if(a[i]>c){
+                d=c;
+                c=a[i];
+            }
+            else{
+                d=a[i];
+            }
+        }
+
+        cout<<d<<" "<<c<<" "<<b<<endl;
+
+    }
+
+}
