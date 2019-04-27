@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+ll ans=0;map<ll,ll> m;
+
+void f(ll n){
+    if(m.count(n)) return;
+    if(m.count(n)==0 && n%10) ans++;
+    m[n]++;
+    if(n%10==0) f(n/10);
+    else f(n+1);
+}
+
+int main() {
+
+    ll n;
+    cin>>n;
+    if(n%10==0)
+    {
+        ans++;
+        f(n+1);
+    }
+    else
+        f(n);
+    
+    
+    cout<<ans<<endl;
+}
