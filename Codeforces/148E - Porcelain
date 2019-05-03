@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+const ll mod = 1e9+7;
+ll n,m;
+vector<vector<ll>> v(101);
+ll dp[101][50000];
+ll best[101][50000];
+ll f(ll i,ll j){
+    // Base Case    
+    if(i<0){
+        if(j==0){
+            return 0;
+        }
+        return INT_MIN;
+    }
+    if(j==0){
+        return 0;
+    }
+    if(j<0)return INT_MIN;
+    if(dp[i][j]!=-1){
+        return dp[i][j];
+    }
+
+    // Rec Case
+    ll ans=0;
+    for(ll k=0;k<=v[i].size();k++){
+        ans=max(ans,f(i-1,j-k)+best[i][k]);
+    }
+
+    return dp[i][j]=ans;
+
+}
+
+int main() {
+
+    ios_base::sync_with_stdio(NULL);
+    cin.tie(0);
+    cout.tie(0);
+    cin>>n;
+    cin>>m;
+    for(ll i=0;i<n;i++){
+        ll x;
+        cin>>x;
+        for(ll j=0;j<x;j++){
+            ll y;
+            cin>>y;
+            v[i].push_back(y);
+            // cout<<v[i][j]<<" ";
+        }
+        // cout<<v[i].size()<<endl;
+    }
+    ll left[101][50000]{0};ll right[101][50000]{0};
+    memset(dp,-1,sizeof(dp));
+    memset(best,-1,sizeof(best));
+    for(ll i=0;i<n;i++){
+        for(ll j=0;j<=v[i].size();j++){
+            if(j==0)left[i][j]=0;
+            else
+                left[i][j]=left[i][j-1]+v[i][j-1];
+                // cout<<right[i][j]<<" ";
+        }
+        // cout<<endl;
+    }
+    for(ll i=0;i<n;i++){
+        for(ll j=0;j<=v[i].size();j++){
+            if(j==0){
+                right[i][j]=0;
+            }
+            else{
+                right[i][j]=right[i][j-1]+v[i][v[i].size()-j];
+            }
+            // cout<<right[i][j]<<" ";
+        }
+        // cout<<endl;
+    }
+    for(ll i=0;i<n;i++){
+        for(ll j=0;j<=v[i].size();j++){
+            ll ans=0;
+            for(ll k=0;k<=j;k++){
+                ans=max(ans,left[i][k]+right[i][j-k]);
+            }
+            best[i][j]=ans;
+            // cout<<best[i][j]<<" ";
+        }
+        // cout<<endl;
+    }
+
+    cout<<f(n-1,m)<<endl;
+
+}
