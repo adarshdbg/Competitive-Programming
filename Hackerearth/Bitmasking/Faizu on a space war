@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long 
+
+
+const ll mod = 1e9+7;
+
+ll hash_function(string s){
+    ll ans=0;
+    for(ll i=0;s[i];i++){
+        ans+=(s[i]-'a')+1;
+    }
+    return ans;
+}
+
+ll dp[15][(1<<15)][15];
+map<ll,ll> m;
+
+ll f(string *s,ll n,ll i,ll mask,ll last){
+    // Base Case
+    if(i==n){
+        return 0;
+    }
+    // Rec Case
+    ll &res=dp[i][mask][last];
+
+    if(res!=-1){
+        return res;
+    }
+
+    res=0;
+    if(i==0){
+        for(ll j=0;j<n;j++){
+            res=max(res,f(s,n,i+1,1<<j,j));
+        }
+        return res;
+    }
+    else
+        for(ll j=0;j<n;j++){
+            if(!(mask&(1<<j))){
+                
+                ll h1=m[last],h2=m[j];
+                res=max(res,(h1^h2)+f(s,n,i+1,mask|(1<<j),j));
+            }
+        }
+
+    return res;
+
+}
+
+
+int main() {
+    ios_base::sync_with_stdio(NULL);
+    cin.tie(0);
+    cout.tie(0);
+    ll n;
+    cin>>n;
+    string s[n];
+    // ll h[n]{0};
+    for(ll i=0;i<n;i++){
+        cin>>s[i];
+        // h[i]=hash_function(s[i]);
+        m[i]=hash_function(s[i]);
+    }
+
+    memset(dp,-1,sizeof(dp));
+
+    ll ans=0;
+    ans=f(s,n,0,0,0);
+    cout<<ans<<endl;
+
+}
