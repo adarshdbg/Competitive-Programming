@@ -1,0 +1,111 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+class node{
+    public:
+        int data;
+        node*next;
+        node(){
+            data=0;
+            next=NULL;
+        }
+        node(int d){
+            data=d;
+            next=NULL;
+        }
+};
+
+node* insert(node *head,node* &tail,int x){
+    if(!head){
+        node* t=new node();
+        t->data=x;
+        t->next=NULL;
+        head=t;
+        tail=t;
+        return head;
+    }
+    node* t=new node();
+    t->data=x;
+    t->next=NULL;
+    tail->next=t;
+    tail=t;
+    return head;
+}
+
+void print(node* head){
+    if(!head)return;
+    cout<<head->data<<" ";
+    print(head->next);
+}
+
+node* sort(node* head){
+    if(!head || !head->next){
+        return head;
+    }
+    node* h1=sort(head->next);
+    node* t1=h1;
+    int m1=INT_MAX;node* t2;
+    while(t1){
+        if(t1->data<head->data){
+            t2=t1;
+        }
+        t1=t1->next;
+    } 
+    if(t2 && head->data>=t2->data){
+        node* t3=t2->next;
+        t2->next=new node(head->data);
+        t2->next->next=t3;
+        return h1;
+    }
+    else{
+        head->next=h1;
+    }
+    return head;
+}
+
+node* del(node* head,int i){
+    if(!head){
+        return head;
+    }
+    int cnt=0;
+    node *x=head;
+    while(x && cnt<i-1){
+        x=x->next;
+        cnt++;
+    }
+    if(i==0){
+        return head->next;
+    }
+    if( x&& x->next){
+        x->next=x->next->next;
+    }
+    return head;
+    
+}
+
+
+int main() {
+    node *head=new node();
+    
+    head=NULL;
+    node*tail=head;
+    int n;
+    cin>>n;
+    ll q;
+    cin>>q;
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        head=insert(head,tail,x);
+    }
+    
+    while(q--){
+        ll a;
+        cin>>a;
+         head=del(head,a);
+        print(head);
+        cout<<endl;
+    }
+    
+	return 0;
+}
