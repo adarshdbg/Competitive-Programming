@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class node{
+    public:
+        int data;
+        node*next;
+        node(){
+            data=0;
+            next=NULL;
+        }
+        node(int d){
+            data=d;
+            next=NULL;
+        }
+};
+
+node* insert(node *head,node* &tail,int x){
+    if(!head){
+        node* t=new node();
+        t->data=x;
+        t->next=NULL;
+        head=t;
+        tail=t;
+        return head;
+    }
+    node* t=new node();
+    t->data=x;
+    t->next=NULL;
+    tail->next=t;
+    tail=t;
+    return head;
+}
+
+void print(node* head){
+    if(!head)return;
+    cout<<head->data<<" ";
+    print(head->next);
+}
+
+node* sort(node* head){
+    if(!head || !head->next){
+        return head;
+    }
+    node* h1=sort(head->next);
+    node* t1=h1;
+    int m1=INT_MAX;node* t2;
+    while(t1){
+        if(t1->data<head->data){
+            t2=t1;
+        }
+        t1=t1->next;
+    } 
+    if(t2 && head->data>=t2->data){
+        node* t3=t2->next;
+        t2->next=new node(head->data);
+        t2->next->next=t3;
+        return h1;
+    }
+    else{
+        head->next=h1;
+    }
+    return head;
+}
+
+int main() {
+    node *head=new node();
+    
+    head=NULL;
+    node*tail=head;
+    int n;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        head=insert(head,tail,x);
+    }
+    // print(head);
+    // cout<<endl;
+    head=sort(head);
+    print(head);
+	return 0;
+}
