@@ -1,0 +1,224 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long 
+class node{
+    public:
+        int data;
+        node*next;
+        node(){
+            data=0;
+            next=NULL;
+        }
+        node(int d){
+            data=d;
+            next=NULL;
+        }
+};
+
+node* insert(node *head,node* &tail,int x){
+    if(!head){
+        node* t=new node();
+        t->data=x;
+        t->next=NULL;
+        head=t;
+        tail=t;
+        return head;
+    }
+    node* t=new node();
+    t->data=x;
+    t->next=NULL;
+    tail->next=t;
+    tail=t;
+    return head;
+}
+
+void print(node* head){
+    if(!head)return;
+    cout<<head->data<<" ";
+    print(head->next);
+}
+
+node* sort(node* head){
+    if(!head || !head->next){
+        return head;
+    }
+    node* h1=sort(head->next);
+    node* t1=h1;
+    int m1=INT_MAX;node* t2;
+    while(t1){
+        if(t1->data<head->data){
+            t2=t1;
+        }
+        t1=t1->next;
+    } 
+    if(t2 && head->data>=t2->data){
+        node* t3=t2->next;
+        t2->next=new node(head->data);
+        t2->next->next=t3;
+        return h1;
+    }
+    else{
+        head->next=h1;
+    }
+    return head;
+}
+
+node* del(node* head,int i){
+    if(!head){
+        return head;
+    }
+    int cnt=0;
+    node *x=head;
+    while(x && cnt<i-1){
+        x=x->next;
+        cnt++;
+    }
+    if(i==0){
+        return head->next;
+    }
+    if( x&& x->next){
+        x->next=x->next->next;
+    }
+    return head;
+    
+}
+
+
+node* mid(node* head,int n){
+    if(!head || !head->next){
+        return head;
+    }
+    node* ss=head;
+    node* s=head,*t=head;
+    while(s && t && t->next){
+        ss=s;
+        s=s->next;
+        t=t->next->next;
+    }
+    if(n%2==0){
+        return ss;
+    }
+    return s;
+}
+
+bool isPal(node* head,int len){
+    if(len==0 || len==1 || len==2){
+        return true;
+    }
+    bool s=isPal(head->next,len-2);
+    int cnt=0;
+    node *t=head;
+    while(t && cnt<len-1){
+        t=t->next;
+        cnt++;
+    }
+    return s&&(head->data==t->data);
+    
+}
+
+node* removecycle(node* head){
+    map<ll,ll> m;
+    node * x=head;
+    node* y=head;
+    while(x){
+        if(m[x->data]>0){
+            y->next=NULL;
+            return head;
+        }
+        y=x;
+        m[x->data]++;
+        x=x->next;
+        
+    }
+    if(y){
+        y->next=NULL;
+    }
+    return head;
+}
+
+node* reversefull(node* head,int n){
+    if(n<=2){
+        return head;
+    }
+    node * tt=reversefull(head->next,n-2);
+    node* t=head;int cnt=0;
+    while(t && cnt<n-1){
+        t=t->next;
+        cnt++;
+    }
+    swap(t->data,head->data);
+    return head;
+}
+
+node* reverse(node* head,int k,int n){
+    int cnt=0;
+    node* t=head;
+    while(cnt<k-1 && t){
+        t=t->next;
+        cnt++;
+    }
+    if(cnt<k-1){
+        return head;
+    }
+    node* tt=reverse(t->next,k,n);
+    t->next=NULL;
+    head=reversefull(head,n);
+    node* ttt=head;
+    while(ttt && ttt->next){
+        ttt=ttt->next;
+    }
+    ttt->next=tt;
+    return head;
+}
+
+node* reverseIterative(node* head){
+    if(!head || (head && !head->next))return head;
+    node *curr=head;
+    node* prev=NULL;
+    while(curr){
+        node* t=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=t;
+    }
+    return prev;
+}
+
+node* reverse(node* head,int k,int n){
+    if(!head || (head && !head->next))return head;
+    int cnt=0;
+    node* t=head;
+    while(cnt<k-1 && t){
+        t=t->next;
+        cnt++;
+    }
+    if(cnt<k-1){
+        return head;
+    }
+    node* tt=reverse(t->next,k,n);
+    t->next=NULL;
+    head=reverseIterative(head);
+    node* ttt=head;
+    while(ttt && ttt->next){
+        ttt=ttt->next;
+    }
+    ttt->next=tt;
+    return head;
+}
+int main() {
+    node *head=new node();
+    int n;
+    cin>>n;
+    
+    head=NULL;
+    node*tail=head;
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        head=insert(head,tail,x);
+    }
+    head=reverseIterative(head);
+    print(head);
+    cout<<endl;
+	return 0;
+}
