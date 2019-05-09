@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+class k-Stacks{
+    public:
+        ll* a;
+        ll n,k;
+        ll *top,*nextIndex;
+        ll nextAvialable;
+        k-Stacks(ll n,ll k){ // Constructor 
+            this->n=n;
+            this->k=k;
+            nextAvialable=0;
+            a=new ll[n];
+            top=new ll[k];
+            nextIndex=new ll[n];
+            for(ll i=0;i<n;i++){
+                nextIndex[i]=i+1;
+            }
+            nextIndex[n-1]=-1;
+            for(ll i=0;i<k;i++){
+                top[i]=-1;
+            }
+        }
+
+        bool isfull(){
+            return nextAvialable==-1;
+        }
+
+        string push(ll box,ll element){
+            if(box<0 || box>=k || nextAvialable==-1){
+                return "Stack Overflow Or Index out of Range";
+            }
+            int currIndex=nextAvialable;
+            nextAvialable=nextIndex[currIndex];
+            // Now , update the next element and top value
+            nextIndex[currIndex]=top[box];
+            top[box]=currIndex;
+            a[i]=element;
+            return "All Set !";
+        }
+
+        ll pop(ll box){
+            if(box<0 || box>=k || top[box]<0){
+                return -1e17;
+            }
+            int currIndex=top[box];
+            // We need to remove this top element from stack number 'box'
+            top[sn]=nextIndex[currIndex];
+            // Now , update the nextIndex[currIndex] and nextAvialable
+            nextIndex[currIndex]=nextAvialable;
+            nextAvialable=currIndex;
+            return 0;
+        }
+
+};
+
+
+
+int main() {
+
+
+
+}
