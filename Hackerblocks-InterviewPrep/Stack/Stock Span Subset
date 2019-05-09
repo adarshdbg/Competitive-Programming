@@ -1,0 +1,121 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define vd(T) vector<vector<T>>
+#define v(T) vector<T>
+#define mod (ll)(1e9+7)
+#define pp(T) pair<T,T>
+#define pb push_back
+#define mp make_pair
+#define NN 100005
+#define IO ios_base::sync_with_stdio(NULL),cin.tie(0),cout.tie(0)
+#define loop(i,a,b) for(ll i=a;i<b;i++)
+#define DEBUG cout<<"***********DEBUGGING***********"<<endl
+#include <ext/pb_ds/assoc_container.hpp> // Common file 
+#include <ext/pb_ds/tree_policy.hpp> 
+using namespace __gnu_pbds; 
+typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ordered_set; 
+ll power(ll a,ll b){ if(b==0) return 1; ll s=power(a,b/2); s*=s;if(b&1) return s*a; return s;}
+ll powermod(ll a,ll b,ll m){ if(b==0) return 1; ll s=power(a,b/2);s*=s; s%=m; if(b&1) return (s*a)%m; return s;}
+inline int add(ll a,ll b,ll m=0){
+    if(m==0) return a+b;
+    return (a%m+b%m)%m;
+}
+
+inline int sub(ll a,ll b ,ll m=0){
+    if(m==0) return a-b;
+    return ((a%m-b%m)%m+m)%m;
+}
+
+inline int mul(ll a,ll b,ll m=0){
+    if(m==0)return (a*b);
+    return ((a%m)*(b%m))%m;
+}
+
+inline int div(ll a,ll b,ll m=0){
+    if(m==0) return a/b;
+    return ((a%m)*(powermod(a,b,m-2)%m))%m;
+}
+
+bool isopen(char c){
+    return ((c=='(')||(c=='{')||(c=='['));
+}
+
+ll longest_balanced_parenthesis(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+
+void stock_span_continous(ll *a,ll n){
+    ll dp[n+1]{0};
+    dp[1]=1;
+    memset(dp,1,sizeof(dp));
+    dp[1]=1;
+    for(ll i=2;i<=n;i++){
+        if(a[i-1]>=a[i-2]){
+            dp[i]=dp[i-1]+1;
+        }
+        else{
+            dp[i]=1;
+        }
+    }
+    for(ll i=1;i<=n;i++){
+        cout<<dp[i]<<" ";
+    }
+    cout<<"END"<<endl;
+}
+
+void stock_span_subset(ll* a,ll n){
+    ll dp[n+1]{0};
+    dp[1]=1;
+    fill(dp+1,dp+n+1,1);
+    ordered_set x;
+    x.insert(a[0]);
+    for(ll i=2;i<=n;i++){
+        dp[i]=(x.order_of_key(a[i-1]+1));
+        if(dp[i]==0){
+            dp[i]=1;
+        }
+        x.insert(a[i-1]);
+    }
+    loop(i,1,n+1){
+        cout<<dp[i]<<" ";
+    }
+    cout<<endl;
+}
+
+int main() {
+
+    IO; 
+
+    ll n;
+    cin>>n;
+    ll a[n];
+    loop(i,0,n){
+        cin>>a[i];
+    }
+    
+    
+    stock_span_subset(a,n);
+
+}
