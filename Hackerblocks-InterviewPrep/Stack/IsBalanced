@@ -1,0 +1,116 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define vd(T) vector<vector<T>>
+#define v(T) vector<T>
+#define mod (ll)(1e9+7)
+#define pp(T) pair<T,T>
+#define pb push_back
+#define mp make_pair
+#define NN 100005
+#define IO ios_base::sync_with_stdio(NULL),cin.tie(0),cout.tie(0)
+#define loop(i,a,b) for(ll i=a;i<b;i++)
+#define DEBUG cout<<"***********DEBUGGING***********"<<endl
+ll power(ll a,ll b){ if(b==0) return 1; ll s=power(a,b/2); s*=s;if(b&1) return s*a; return s;}
+ll powermod(ll a,ll b,ll m){ if(b==0) return 1; ll s=power(a,b/2);s*=s; s%=m; if(b&1) return (s*a)%m; return s;}
+inline int add(ll a,ll b,ll m=0){
+    if(m==0) return a+b;
+    return (a%m+b%m)%m;
+}
+
+inline int sub(ll a,ll b ,ll m=0){
+    if(m==0) return a-b;
+    return ((a%m-b%m)%m+m)%m;
+}
+
+inline int mul(ll a,ll b,ll m=0){
+    if(m==0)return (a*b);
+    return ((a%m)*(b%m))%m;
+}
+
+inline int div(ll a,ll b,ll m=0){
+    if(m==0) return a/b;
+    return ((a%m)*(powermod(a,b,m-2)%m))%m;
+}
+
+ll* next_greater(ll* a,ll n){
+    stack<ll> s;
+    ll ans[n+1]{0};
+    memset(ans,-1,sizeof(ans));
+    s.push(0);
+    for(ll i=1;i<n;i++){
+        if(a[s.top()]>a[i]){
+            s.push(i);
+        }
+        else{
+            
+            while(s.empty()==false && a[s.top()]<a[i]){
+                ll t=a[s.top()];
+                ans[s.top()]=i+1;
+                s.pop();
+            }
+            s.push(i);
+            
+        }
+    }
+    
+    return ans;
+}
+
+ll* next_smaller(ll *a,ll n){
+    stack<ll> s;
+    ll ans[n]{0};
+    memset(ans,-1,sizeof(ans));
+    s.push(0);
+    for(ll i=0;i<n;i++){
+        if(a[s.top()]<a[i]){
+            s.push(i);
+        }
+        else{
+            while(!s.empty() && a[s.top()]>a[i]){
+                ll t=a[s.top()];
+                ans[s.top()]=i+1;
+                s.pop();
+            }
+            s.push(i);
+        }
+    }
+    return ans;
+}
+
+bool isBalanced(string s){
+    stack<char> ss;
+    for(ll i=0;s[i];i++){
+        if(s[i]=='('){
+            ss.push('(');
+        }
+        else{
+            if(ss.empty()||ss.top()==')'){
+                return false;
+            }
+            ss.pop();
+        }
+    }
+    // cout<<ss.size()<<" ";
+    if(ss.size()>0){
+        return false;
+    }
+    return true;
+}
+
+int main() {
+
+    IO; 
+
+    string s;
+    cin>>s;
+    if(isBalanced(s)){
+        cout<<"Yes"<<endl;
+    }
+    else{
+        cout<<"No"<<endl;
+    }
+    
+
+
+}
