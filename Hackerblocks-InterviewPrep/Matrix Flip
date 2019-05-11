@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long 
+
+ll power(ll a,ll b){
+    if(b==0) return 1;
+    ll s=power(a,b/2);
+    s*=s;
+    if(b&1) return s*a;
+    return s;
+}
+
+ll find(ll *a,ll n){
+    ll ans=0;
+    ll j=n-1;
+    ll p=1;
+    while(j>=0){
+        ans+=(a[j]*p);
+        p*=2;
+        j--;
+    }
+    return ans;
+}
+
+ll* flip(ll *a,ll n){
+    for(ll i=0;i<n;i++) a[i]=1-a[i];
+    return a;
+}
+
+int main(){
+
+    ll n,m;
+    cin>>n>>m;
+    ll a[n][m],pre[m]={0};
+    for(ll i=0;i<n;i++)
+        for(ll j=0;j<m;j++){
+            cin>>a[i][j];
+        }
+    ll ans=0;
+    for(ll i=0;i<n;i++){
+        if(a[i][0]==0)
+            flip(a[i],m);
+    }
+    for(ll j=0;j<m;j++){
+        ll cnt=0;
+        for(ll i=0;i<n;i++){
+            cnt+=(a[i][j]==0);
+        }
+        if(cnt>n-cnt){
+            for(ll i=0;i<n;i++)
+                a[i][j]=1-a[i][j];
+        }
+    }
+    for(ll i=0;i<n;i++){
+        ans+=find(a[i],m);
+    }
+    
+    
+    cout<<ans<<endl;
+}
