@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+class Solution {
+    public:
+    
+    bool isopen(char c){
+        return (c=='(')||(c=='{')||(c=='[');
+    }
+    bool isValid(string s) {
+        map<char,ll> q;
+        q['[']=3;
+        q[']']=3;
+        q['{']=q['}']=1;
+        q['(']=q[')']=2;
+        stack<char> ss;
+        for(ll i=0;s[i];i++){
+            if(isopen(s[i])){
+                ss.push(s[i]);
+            }
+            else{
+                if(ss.empty()||!isopen(ss.top())){
+                    return false;
+                }
+                if(!s.empty() && q[s[i]]!=q[ss.top()]){
+                    return false;
+                }
+                ss.pop();
+            }
+        }
+        // cout<<ss.size()<<" ";
+        if(ss.size()>0){
+            return false;
+        }
+        return true;
+    }
+};
