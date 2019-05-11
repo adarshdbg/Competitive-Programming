@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define NN (ll)(1e6)
+const ll  mod = 1e9+9;
+ll p=37;
+string cyclic_shift(string a,ll k){
+    string b;
+    b.push_back(a[k]);
+    for(ll i=(k+1)%a.length();i!=k;i=(i+1)%a.length()){
+        b.push_back(a[i]);
+    }
+    return b;
+}
+ll h[NN]{0};
+
+ll power(ll a,ll b){
+    if(b==0) return 1;
+    ll s=power(a,b/2);
+    s*=s;
+    s%=mod;
+    if(b&1) return (s*a)%mod;
+    return s;
+}
+
+ll inv(ll a){
+    return power(a,mod-2);
+}   
+
+bool ispossible(string a,ll len){
+    unordered_map<ll,ll> m;
+    for(ll i=len-1;a[i];i++){
+        ll t=h[i]-(i>len-1?h[i-len]:0);
+        t=(t%mod+mod)%mod;
+        t*=inv(power(p,i-len+1)%mod);
+        t%=mod;
+        m[t]++;
+        if(m[t]>=2){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+int main(){
+    
+    string a;
+    cin>>a;
+    ll pp=1;
+    for(ll i=0;a[i];i++){
+        if(i==0){
+            h[0]=a[i]-'a'+1;
+        }
+        else{
+            h[i]=(h[i-1])%mod+(a[i]-'a'+1)*pp;
+            h[i]%=mod;
+        }
+        // cout<<h[i]<<" ";
+        pp*=p;
+        pp%=mod;
+    }
+    // cout<<endl;
+    
+    ll si=1,ei=a.length();
+    ll ans=1;
+    while(si<=ei){
+        ll mid=(si+ei)/2;
+        if(ispossible(a,mid)){
+            ans=mid;
+            si=mid+1;
+        }
+        else
+            ei=mid-1;
+    }
+    cout<<ans<<endl;
+}
