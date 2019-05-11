@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define NN (ll)(1e6)
+const ll  mod = 1e9+7;
+
+int main(){
+    
+    ll n;
+    cin>>n;
+    ll a[n];
+    for(ll i=0;i<n;i++){
+        cin>>a[i];
+    }
+    map<ll,ll> m;
+    ll k[NN]{0};
+    memset(k,0,sizeof(k));
+    for(ll i=0;i<n;i++){
+        //Find the divisor of each a[i]
+        for(ll j=1;j*j<=a[i];j++){
+            if(a[i]%j==0){
+                m[j]++;
+                if(j*j!=a[i]){
+                    m[a[i]/j]++;
+                }
+            }
+        }
+    }
+    ll q;
+    cin>>q;
+    while(q--){
+        ll c;
+        cin>>c;
+        cout<<m[c]<<endl;
+    }
+        
+    
+}
