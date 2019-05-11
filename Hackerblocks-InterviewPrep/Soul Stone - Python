@@ -1,0 +1,53 @@
+import collections 
+def CountFrequency(arr): 
+    return collections.Counter(arr) 
+
+h=[]
+p=1
+pp=31
+def ispossible(a,l):
+    freq = {} 
+    for i in range(l-1,len(a)):
+        if (i==l-1):
+            t=h[i]
+            if (t in freq):
+                freq[t]+=1
+            else:
+                freq[t]=1
+            continue
+        t=(h[i]-h[i-l])
+        t=(t//(pp**(i-l+1)))
+        if (t in freq):
+                freq[t]+=1
+        else:
+            freq[t]=1
+    for key, value in freq.items(): 
+        if value>=2:
+            return True
+    
+    return False
+
+
+
+a=str(input())
+
+
+
+for i in range(len(a)):
+    if(i>0):
+        h.append(h[i-1]+(ord(a[i])-ord('a')+1)*p)
+    else:
+        h.append((ord(a[i])-ord('a')+1))
+    p*=pp
+ans=1 
+si=1
+ei=len(a)
+while(si<=ei):
+    mid=(si+ei)//2
+    if ispossible(a,mid)==True:
+        ans=mid
+        si=mid+1
+    else:
+        ei=mid-1
+        
+print(ans)
