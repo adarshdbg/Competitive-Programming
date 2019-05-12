@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool isValid(string S) {
+        stack<char> st;
+        for(char c: S){
+            if(c=='a'||c=='b'){
+                st.push(c);
+            }
+            else if(c=='c'){
+                if(st.empty())
+                    return false;
+                char pre1=st.top();
+                st.pop();
+                if(pre1=='b'){
+                    if(st.empty())
+                        return false;
+                    char pre2=st.top();
+                    st.pop();
+                    if(pre2=='a'){
+                        continue;
+                    }
+                    else{
+                        st.push(pre2);
+                        st.push(pre1);
+                        st.push(c);
+                    }
+                }
+                else{
+                    st.push(pre1);
+                    st.push(c);
+                }
+            }
+        }
+        
+        return st.empty();
+    }
+};
