@@ -1,0 +1,120 @@
+#define ll long long
+class Solution {
+public:
+    bool isoperand(char c){
+        return (c>='1' && c<='9') || (c>='a' && c<='z')||(c>='A' && c<='Z');
+    }
+    int prec(char c) 
+    { 
+        if(c == '^') 
+        return 3; 
+        else if(c == '*' || c == '/') 
+        return 2; 
+        else if(c == '+' || c == '-') 
+        return 1; 
+        else
+        return -1; 
+    } 
+    string infix_postfix(string a){
+        stack<char> s;
+        string ans="";
+        for(int i=0;a[i];i++){
+            if(a[i]==' ')continue;
+            if(isoperand(a[i])){
+                ans.push_back(a[i]);
+            }
+            else if(a[i]=='('){
+                s.push(a[i]);
+            }
+            else if(a[i]==')'){
+                while(!s.empty() && s.top()!='('){
+                    ans+=s.top();
+                    s.pop();
+                }
+                if(s.top()=='('){
+                    s.pop();
+                }
+            }
+            else{
+                if(s.empty()){
+                    s.push(a[i]);
+                    continue;
+                }
+                if(prec(a[i])>prec(s.top())){
+                    s.push(a[i]);
+                }
+                 else{
+                     while(!s.empty() && prec(a[i])<=prec(s.top())){
+                        ans+=s.top();
+                        s.pop();
+                     }
+                     s.push(a[i]);
+                 }
+            }
+        }
+        while(!s.empty()){
+            ans+=s.top();
+            s.pop();
+        }
+        return ans;
+    }
+    int integer(string a){
+        ll p=1;
+        ll ans=0;
+        for(ll i=0;a[i];i++){
+            ans=(a[i]-'0')+ans*10;
+            p*=10;
+        }
+        return ans;
+    }
+    string to_str(int a){
+
+        string s;
+        while(a){
+            s.push_back(a%10+48);
+            a/=10;
+        }
+        reverse(s.begin(),s.end());
+        return s;
+    }
+    int evaluate(string a){
+        stack<string> s;
+        int ans=0;
+        for(int i=0;a[i];i++){
+            if(isoperand(a[i])){
+                string s1="";
+                s1+=a[i];
+                s.push(s1);
+            }
+            else{
+                string s1="";
+                s1+=s.top();
+                int c=integer(s1);
+                s.pop();
+                s1="";
+                s1+=s.top();
+                int d=integer(s1);
+                s.pop();
+                
+                if(a[i]=='+'){
+                    s.push(to_str(c+d));
+                }
+                else if(a[i]=='-'){
+                    s.push(to_str(d-c));
+                }
+                else if(a[i]=='*'){
+                    s.push(to_str(c*d));
+                }
+                else{
+                    s.push(to_str(d/c));
+                }
+            }
+        }
+        return integer(s.top());
+    }
+    
+    int calculate(string s) {
+        // Convert it into postfix expression first and then find the value of expression
+        return evaluate(infix_postfix(s));
+    }
+};
