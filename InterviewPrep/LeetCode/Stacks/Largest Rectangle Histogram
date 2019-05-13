@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll int
+class Solution {
+public:
+    ll largestRectangleArea(vector<ll> a) {
+        stack<ll> s;
+        ll ans=0;
+        ll n=a.size();
+        ll i=0;
+        for(i=0;i<n;i++){
+            if(s.empty() || a[s.top()]<=a[i]){
+                s.push(i);
+            }
+            else{
+                    ll t=s.top();
+                    s.pop();
+                    ll x=(s.empty()?i:i-s.top()-1);
+                    ans=max(ans,(x)*a[t]);
+                if(s.empty())
+                    s.push(i);
+            }
+        }
+        while(!s.empty()){
+            ll t=s.top();
+            s.pop();
+            ll x=(s.empty()?i:i-s.top()-1);
+            ans=max(ans,(x)*a[t]);
+        }
+        return ans;
+    }
+};
