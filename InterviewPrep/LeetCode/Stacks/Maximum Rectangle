@@ -1,0 +1,60 @@
+#define ll int
+class Solution {
+public:
+    ll largestRectangleArea(vector<ll> a) {
+        stack<ll> s;
+        ll ans=0;
+        ll n=a.size();
+        ll i=0;
+        while(i<n){
+            if(s.empty() || a[s.top()]<=a[i]){
+                s.push(i++);
+            }
+            else{
+                    ll t=s.top();
+                    s.pop();
+                    ll x=(s.empty()?i:i-s.top()-1);
+                    ans=max(ans,(x)*a[t]);
+            }
+        }
+        while(!s.empty()){
+            ll t=s.top();
+            s.pop();
+            ll x=(s.empty()?i:i-s.top()-1);
+            ans=max(ans,(x)*a[t]);
+        }
+        return ans;
+    }
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        if(matrix.size()==0){
+            return 0;
+        }
+        int ans=0;
+        vector<ll> v(matrix[0].size());
+        vector<vector<ll>> matrix1(matrix.size());
+        for(int i=0;i<matrix.size();i++){
+            
+            for(int j=0;j<matrix[0].size();j++){
+                v[j]=matrix[i][j]-48;
+            }
+            matrix1[i]=v;
+        }
+        for(int i=0;i<matrix[0].size();i++){
+            v[i]=matrix1[0][i];
+        }
+        ans=largestRectangleArea(v);
+        for(int i=1;i<matrix.size();i++){
+            for(int j=0;j<matrix[0].size();j++){
+                if(matrix1[i][j])
+                    matrix1[i][j]+=matrix1[i-1][j];
+                else
+                    matrix1[i][j]=0;
+            }
+            for(int j=0;j<matrix[0].size();j++){
+                v[j]=matrix1[i][j];
+            }
+            ans=max(ans,largestRectangleArea(v));
+        }
+        return ans;
+    }
+}; 
