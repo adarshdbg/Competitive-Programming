@@ -1,0 +1,20 @@
+int minimum_jumps(int *a,int n){
+    int ans=0,step=0;
+    int maxReach=0;
+    for(int i=0;i<n;i++){
+        if(i==0){
+            maxReach=a[0];
+            ans++;
+            continue;
+        }
+        maxReach=max(maxReach,a[i]+i);
+        step--;
+        if(step==0){
+            if(maxReach<=i){
+                return -1;
+            }
+            step=maxReach;
+        }
+    }
+    return ans;
+}
