@@ -1,0 +1,505 @@
+    
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define vd(T) vector<vector<T>>
+#define v(T) vector<T>
+#define mod (ll)(1e9+7)
+#define pp(T) pair<T,T>
+#define pb push_back
+#define mp make_pair
+#define NN 100005
+#define IO ios_base::sync_with_stdio(NULL),cin.tie(0),cout.tie(0)
+#define loop(i,a,b) for(ll i=a;i<b;i++)
+#define DEBUG cout<<"***********DEBUGGING***********"<<endl
+#include <ext/pb_ds/assoc_container.hpp> // Common file 
+#include <ext/pb_ds/tree_policy.hpp> 
+using namespace __gnu_pbds; 
+typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ordered_set; 
+ll power(ll a,ll b){ if(b==0) return 1; ll s=power(a,b/2); s*=s;if(b&1) return s*a; return s;}
+ll powermod(ll a,ll b,ll m){ if(b==0) return 1; ll s=power(a,b/2);s*=s; s%=m; if(b&1) return (s*a)%m; return s;}
+inline int add(ll a,ll b,ll m=0){
+    if(m==0) return a+b;
+    return (a%m+b%m)%m;
+}
+
+inline int sub(ll a,ll b ,ll m=0){
+    if(m==0) return a-b;
+    return ((a%m-b%m)%m+m)%m;
+}
+
+inline int mul(ll a,ll b,ll m=0){
+    if(m==0)return (a*b);
+    return ((a%m)*(b%m))%m;
+}
+
+inline int div(ll a,ll b,ll m=0){
+    if(m==0) return a/b;
+    return ((a%m)*(powermod(a,b,m-2)%m))%m;
+}
+
+bool isopen(char c){
+    return ((c=='(')||(c=='{')||(c=='['));
+}
+
+ll longest_balanced_parenthesis(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis1(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis2(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis3(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis4(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis6(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis7(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis8(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis9(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll setup_k(ll *a,ll k){
+  ordered_set x;
+  // Now , insert and then check number of integers less than k by just using x.order_of_key(k+1)
+}
+ll longest_balanced_parenthesis11(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis12(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis13(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis132(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis212(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis127(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+ll longest_balanced_parenthesis12t(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+const int N=1e6+5;
+vector<int>v[N];
+vector<int>segTree[N];
+
+void build(int low,int high,int pos)
+{
+	if(low == high)
+	{
+		segTree[pos] = v[low];
+		return;
+	}
+	int mid = (low+high)>>1;
+	build(low, mid, 2*pos+1);
+	build(mid+1, high, 2*pos+2);
+	merge(segTree[2*pos+1].begin(), segTree[2*pos+1].end(), segTree[2*pos+2].begin(), segTree[2*pos+2].end(), back_inserter(segTree[pos]));
+}
+int query(int low, int high, int pos, int qlow, int qhigh, int x, int y)
+{
+	if(low>high)
+		return 0;
+	if(qlow>high || qhigh < low)
+		return 0;
+	if(qlow <= low && qhigh >= high)
+	{
+		if(x<y)
+		{
+			int left = lower_bound(segTree[pos].begin(), segTree[pos].end(), x) - segTree[pos].begin();
+			int right = upper_bound(segTree[pos].begin(), segTree[pos].end(), y) - segTree[pos].begin();
+			return right-left;
+		}
+		else
+		{
+			int left = upper_bound(segTree[pos].begin(), segTree[pos].end(), x) - segTree[pos].begin();
+			int  right = lower_bound(segTree[pos].begin(), segTree[pos].end(), y) - segTree[pos].begin();
+			return left-right;
+		}
+	}
+	int mid = (low+high)>>1;
+	return query(low, mid, 2*pos+1, qlow, qhigh, x, y) + query(mid+1, high, 2*pos+2, qlow, qhigh, x, y); 
+}
+
+int main() {
+	int i,j,n,q,x,y,l,r;
+	scanf("%d",&n);
+	int temp;
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&temp);
+		while(temp%2==0)
+		{
+			v[i].push_back(2);
+			temp>>=1;
+		}
+		for(j=3;j*j<=temp;j+=2)
+		{
+			while(temp%j==0)
+			{
+				v[i].push_back(j);
+				temp /= j;
+			}
+		}
+		if(temp>2)
+			v[i].push_back(temp);
+	}
+	build(0,n-1,0);
+	scanf("%d",&q);
+	while(q--)
+	{
+		scanf("%d %d %d %d",&l,&r,&x,&y);
+		printf("%d\n",query(0,n-1,0,l-1,r-1,x,y));
+	}
+	return 0;
+}
