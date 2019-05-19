@@ -37,7 +37,7 @@ class k-Stacks{
             // Now , update the next element and top value
             nextIndex[currIndex]=top[box];
             top[box]=currIndex;
-            a[i]=element;
+            a[currIndex]=element;
             return "All Set !";
         }
 
