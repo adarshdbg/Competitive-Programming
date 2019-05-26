@@ -19,7 +19,7 @@ ll f(ll pos,bool flag,ll carry){
         for(ll j=0;j<=1;j++){
             for(ll k=0;k<=1;k++){
                 ll z=(i+j+k);
-                if(z%2==s[pos]){
+                if(z%2==s[pos]-48){
                     ans+=f(pos-1,flag|(z==3),z/2);
                     ans%=mod;
                 }
