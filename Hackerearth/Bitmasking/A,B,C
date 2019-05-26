@@ -37,6 +37,6 @@ int main() {
     cin>>s;
     memset(dp,-1,sizeof(dp));
 
-    cout<<f(s.size()-1,0,0)<<endl;
+    cout<<f(s.size()-1,1,0)<<endl;
 
 }
