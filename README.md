@@ -8,6 +8,7 @@ It includes solutions to both practice and contest problems from following platf
 - Top Coder
 - VJudge
 - Codeforces
+- CodSule Editions
 
 # And there are some important algorithms as follows:
  - String Algorithms
