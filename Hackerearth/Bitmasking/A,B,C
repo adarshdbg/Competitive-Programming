@@ -10,6 +10,7 @@ string s;
 ll f(ll pos,bool flag,ll carry){
     if(pos==-1){
         /// Base Case
+        return (flag && carry==0);
     }
     if(dp[pos][flag][carry]!=-1){
         return dp[pos][flag][carry];
