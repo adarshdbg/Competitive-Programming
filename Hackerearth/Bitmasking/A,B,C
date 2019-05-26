@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+const ll mod = 1e9+7;
+
+// Q. Find the number of triplets A,B,C such that A+B+C=N and (A&B&C)=0 .
+ll dp[100][10][10];
+string s;
+
+ll f(ll pos,bool flag,ll carry){
+    if(pos==-1){
+        /// Base Case
+    }
+    if(dp[pos][flag][carry]!=-1){
+        return dp[pos][flag][carry];
+    }
+    ll ans=0;
+    for(ll i=0;i<=1;i++){
+        for(ll j=0;j<=1;j++){
+            for(ll k=0;k<=1;k++){
+                ll z=(i+j+k);
+                if(z%2==s[pos]){
+                    ans+=f(pos-1,flag|(z==3),z/2);
+                    ans%=mod;
+                }
+            }
+        }
+    }
+    return dp[pos][flag][carry]=ans;
+}
+
+
+int main() {
+
+    
+    cin>>s;
+    memset(dp,-1,sizeof(dp));
+
+    cout<<f(s.size()-1,0,0)<<endl;
+
+}
