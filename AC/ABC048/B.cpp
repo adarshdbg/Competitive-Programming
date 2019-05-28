@@ -88,7 +88,10 @@ int main() {
     ll a,b;
     
     cin>>a>>b>>x;
-    
+    if(a==0){
+        cout<<get_ans(b)<<endl;
+        return 0;
+    }
     cout<<get_ans(b)-get_ans(a-1)<<endl;
     
 
