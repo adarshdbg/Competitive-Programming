@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+ll square(ll n){
+    ll k=sqrt(n);
+    k*=k;
+    return (k==n);
+}
+
+string get_string(ll n){
+    string s;
+    while(n){
+        s.push_back(n%10+48);
+        n/=10;
+    }
+    reverse(s.begin(),s.end());
+    return s;
+}
+
+ll dp[13][2][(1<<10)][600][2];
+ll f(string s,ll pos,bool flag,ll mask,ll str,bool b){
+    // Base Case
+    if(pos==s.length()){
+        if(b && square(str)){
+            return true;
+        }
+        return false;
+    }
+    // Rec Case
+    ll &res=dp[pos][flag][mask][str][b];
+    if(res!=-1){
+        return res;
+    }
+    ll limit=9;
+    if(flag==0){
+        limit=s[pos]-'0';
+    }
+    ll ans=0;
+    
+    for(ll i=0;i<=limit;i++){
+        bool ss;
+        if(mask==0){
+            ss=0;
+        }
+        else{
+            ss=(b|(mask&(1<<i)));
+        }
+        ll m2;
+        if(mask==0 && i==0){
+            m2=0;
+        }
+        else{
+            m2=(mask|(1<<i));
+        }
+        if(flag==0 && (i<s[pos]-'0')){
+            ans+=f(s,pos+1,1,m2,str+i*i,ss);
+        }
+        else{
+            ans+=f(s,pos+1,flag,m2,str+i*i,ss);
+        }
+    }
+    
+    return res=ans;
+}
+
+int main(){
+    
+    ios_base::sync_with_stdio(NULL);
+    cin.tie(0);
+    cout.tie(0);
+    ll tt;
+    cin>>tt;
+    while(tt--){
+        ll l,r;
+        cin>>l>>r;
+        memset(dp,-1,sizeof(dp));
+        ll ans=f(get_string(r),0,0,0,0,0);
+        memset(dp,-1,sizeof(dp));
+        if(l>0)
+            ans-=f(get_string(l-1),0,0,0,0,0);
+        cout<<ans<<endl;
+    }
+
+}
