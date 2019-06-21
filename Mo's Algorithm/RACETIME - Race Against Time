@@ -1,0 +1,133 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define vd(T) vector<vector<T>>
+#define v(T) vector<T>
+#define mod (ll)(1e9+7)
+#define pp(T) pair<T,T>
+#define pb push_back
+#define mp make_pair
+#define NN 100005
+#define IO ios_base::sync_with_stdio(NULL),cin.tie(0),cout.tie(0)
+#define loop(i,a,b) for(ll i=a;i<b;i++)
+#define DEBUG cout<<"***********DEBUGGING***********"<<endl
+#include <ext/pb_ds/assoc_container.hpp> // Common file 
+#include <ext/pb_ds/tree_policy.hpp> 
+using namespace __gnu_pbds; 
+typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ordered_set; 
+ll power(ll a,ll b){ if(b==0) return 1; ll s=power(a,b/2); s*=s;if(b&1) return s*a; return s;}
+ll powermod(ll a,ll b,ll m){ if(b==0) return 1; ll s=power(a,b/2);s*=s; s%=m; if(b&1) return (s*a)%m; return s;}
+inline int add(ll a,ll b,ll m=0){
+    if(m==0) return a+b;
+    return (a%m+b%m)%m;
+}
+
+inline int sub(ll a,ll b ,ll m=0){
+    if(m==0) return a-b;
+    return ((a%m-b%m)%m+m)%m;
+}
+
+inline int mul(ll a,ll b,ll m=0){
+    if(m==0)return (a*b);
+    return ((a%m)*(b%m))%m;
+}
+
+inline int div(ll a,ll b,ll m=0){
+    if(m==0) return a/b;
+    return ((a%m)*(powermod(a,b,m-2)%m))%m;
+}
+
+bool isopen(char c){
+    return ((c=='(')||(c=='{')||(c=='['));
+}
+
+ll longest_balanced_parenthesis(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+
+bool cmp(pair<ll,ll> a,pair<ll,ll> b){
+    return a.first<b.first;
+}
+
+
+ll find_integer_greater_than_x(vector<pair<ll,ll>> a,ll x){
+    ll si=0,ei=a.size()-1;
+    ll ans=-1;
+    while(si<=ei){
+        ll mid=(si+ei)>>1;
+        if(a[mid].first<=x){
+            ans=mid+1;
+            si=mid+1;
+        }
+        else{
+            ei=mid-1;
+        }
+    }
+    if(ans==-1){
+        cout<<"yeah"<<" ";
+        return 0;
+    }
+    return ans;
+}
+
+int main() {
+
+    IO; 
+
+    ll n;
+    cin>>n;
+    ll q;
+    cin>>q;
+    ll a[n];
+    loop(i,0,n){
+        cin>>a[i];
+    }
+    
+    while(q--){
+        char choice;
+        cin>>choice;
+        if(choice=='M'){
+            ll i,x;
+            cin>>i>>x;
+            i--;
+            a[i]=x;
+        }
+        else{
+            ll l,r,x;
+            cin>>l>>r>>x;
+            l--;
+            r--;
+            ll ans=0;
+            for(ll i=l;i<=r;i++){
+                if(a[i]<=x){
+                    ans++;
+                }
+            }
+            cout<<ans<<endl;
+        }
+    }
+
+    
+
+}
