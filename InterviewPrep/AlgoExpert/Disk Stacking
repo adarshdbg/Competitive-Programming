@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+map<int,vector<vector<int>>> m;
+
+bool issmaller(vector<int> a, vector<int> b){
+	return ((a[0]<b[0])&&(a[1]<b[1])&&(a[2]<b[2]));
+}
+
+vector<vector<int>> find_ans(vector<vector<int>> a,int i){
+	// Base Case
+	if(i>=a.size()){
+		vector<vector<int>> b;
+		return b;
+	}
+	// Rec Case
+	if(m.count(i)){
+		return m[i];
+	}
+	vector<vector<int>> ans;
+    if(i==a.size()-1){
+        vector<vector<int>> temp;
+        temp.push_back(a[i]);
+        return m[i]=temp;
+    }
+    ans.push_back(a[i]);
+	for(int j=i+1;j<a.size();j++){
+		if(issmaller(a[i],a[j])){
+			vector<vector<int>> nextCall=find_ans(a,j);
+			if(ans.size()-1<nextCall.size()){
+				ans=nextCall;
+                ans.push_back(a[i]);
+			}
+		}
+	}
+	return m[i]=ans;
+}
+
+vector<vector<int> > diskStacking(vector<vector<int> > disks) {
+  // Write your code here.
+	m.clear();
+	vector<vector<int>> ans=find_ans(disks,0);
+    // cout<<ans.size()<<endl;
+    for(int i=1;i<disks.size();i++){
+        m.clear();
+        vector<vector<int>> ans1=find_ans(disks,i);
+        if(ans.size()<ans1.size()){
+            ans=ans1;
+        }
+    }
+	reverse(ans.begin(),ans.end());
+	return ans;
+	
+}
