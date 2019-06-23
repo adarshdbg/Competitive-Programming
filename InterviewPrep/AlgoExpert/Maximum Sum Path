@@ -1,0 +1,22 @@
+#include <vector>
+using namespace std;
+
+class BinaryTree {
+  public:
+    int value;
+    BinaryTree* left;
+    BinaryTree* right;
+
+    BinaryTree(int value);
+    void insert(vector<int> values, int i = 0);
+};
+
+int maxPathSum(BinaryTree tree) {
+  // Write your code here.
+	if(!tree){
+		return 0;
+	}
+	int left=maxPathSum(tree->left);
+	int right=maxPathSum(tree->right);
+	return max(left,right)+tree->value;
+}
