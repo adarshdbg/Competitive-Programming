@@ -1,0 +1,201 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define vd(T) vector<vector<T>>
+#define vi(T) vector<T>
+#define mod (ll)(1e9+9)
+#define pp(T) pair<T,T>
+#define pb push_back
+#define mp make_pair
+#define NN 100005
+#define IO ios_base::sync_with_stdio(NULL),cin.tie(0),cout.tie(0)
+#define loop(i,a,b) for(ll i=a;i<b;i++)
+#define DEBUG cout<<"***********DEBUGGING***********"<<endl
+#include <ext/pb_ds/assoc_container.hpp> // Common file 
+#include <ext/pb_ds/tree_policy.hpp> 
+using namespace __gnu_pbds; 
+typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> ordered_set; 
+ll power(ll a,ll b){ if(b==0) return 1; ll s=power(a,b/2); s*=s;if(b&1) return s*a; return s;}
+ll powermod(ll a,ll b,ll m){ if(b==0) return 1; ll s=power(a,b/2);s*=s; s%=m; if(b&1) return (s*a)%m; return s;}
+inline int add(ll a,ll b,ll m=0){
+    if(m==0) return a+b;
+    return (a%m+b%m)%m;
+}
+
+inline int sub(ll a,ll b ,ll m=0){
+    if(m==0) return a-b;
+    return ((a%m-b%m)%m+m)%m;
+}
+
+inline int mul(ll a,ll b,ll m=0){
+    if(m==0)return (a*b);
+    return ((a%m)*(b%m))%m;
+}
+
+inline int div(ll a,ll b,ll m=0){
+    if(m==0) return a/b;
+    return ((a%m)*(powermod(a,b,m-2)%m))%m;
+}
+
+bool isopen(char c){
+    return ((c=='(')||(c=='{')||(c=='['));
+}
+
+ll longest_balanced_parenthesis(string a,ll n){
+    stack<char> s;
+    ll start=0;
+    ll ans=0,m=0;
+    for(ll i=0;i<n;i++){
+        if(isopen(a[i])){
+            s.push(a[i]);
+        }
+        else{
+            if(isopen(a[i])|| s.empty()){
+                m=max(m,ans);
+                continue;
+            }
+            else{
+                s.pop();
+                ans+=2;
+                m=max(ans,m);
+            }
+        }
+    }
+
+    return m;
+
+}
+const ll M = 1000000009; // modulo
+map<ll, ll> F;
+
+ll f(ll n) {
+	if (F.count(n)) return F[n];
+	ll k=n/2;
+	if (n%2==0) { // n=2*k
+		return F[n] = (f(k)*f(k) + f(k-1)*f(k-1)) % M;
+	} else { // n=2*k+1
+		return F[n] = (f(k)*f(k+1) + f(k-1)*f(k)) % M;
+	}
+}
+
+ll Fib(ll n){
+    if(n==0){
+        return 0;
+    }
+    F[0]=F[1]=1;
+    return f(n-1);
+}
+
+int main() {
+
+    IO; 
+
+    ll n;
+    cin>>n;
+    ll q;
+    cin>>q;
+    ll a[n+1];
+    loop(i,0,n){
+        cin>>a[i+1];
+        // cout<<a[i]<<" ";
+    }
+    // cout<<endl;
+
+    ll fib[1000000]{0},x[1000000]{0};
+    for(ll i=0;i<=n;i++){
+        fib[i]+=Fib(i);
+        fib[i]%=mod;
+        x[i]=Fib(i);
+    }
+
+    ll blk_sz=sqrt(n);
+    vector<ll> v(blk_sz+1,0);
+    vector<ll> carry(blk_sz+1,0);
+    for(ll i=1;i<=n;i++){
+        v[i/blk_sz]+=a[i];
+        v[i/blk_sz]%=mod;
+    }
+    
+    for(ll i=0;i<q;i++){
+        ll choice;
+        cin>>choice;
+        ll l,r;
+        cin>>l>>r;
+        l;
+        ll block=blk_sz;
+        r;
+        if(choice==1){
+            if((l/blk_sz) == (r/block)){
+                for(ll j=l;j<=r;j++){
+                    a[j]+=x[j-l+1];
+                    a[j]%=mod;
+                }
+                continue;
+            }
+            // Update the prefix block
+            ll temp=l/blk_sz;
+            if(l%block!=0){
+                temp++;
+            }
+            ll i;
+            for(i=l;i<temp*blk_sz;i++){
+                a[i]+=x[i-l+1];
+                a[i]%=mod;
+            }
+            // And then update the contiguous blocks
+            while(i+block-1<=r){
+                ll index=i/block;
+                // Now, we have to search in block no 'index'
+                ll temp1=index;
+                if(i%block!=0){
+                    temp1++;
+                }
+                temp1*=blk_sz;
+                carry[index]+=(((index==0)?fib[temp1-1]:fib[temp1-1]-fib[index-1])%mod);
+                carry[index]%=mod;
+                i+=block;
+            }
+            // Then, update the suffix block
+            while(i<=r){
+                a[i]+=x[i-l+1];
+                a[i]%=mod;
+                i++;
+            }
+        }
+        else{
+            // Query Time , Whoaaa !!!
+            ll ans=0;
+            if((l/block) ==(r/block)){
+                for(ll j=l;j<=r;j++){
+                    ans+=(a[j]+carry[j/blk_sz])%mod;
+                    ans%=mod;
+                }
+            }
+            else{
+                ll temp=l/block;
+                if(l%block!=0){
+                    temp++;
+                }
+                ll i;
+                for(i=l;i<temp*block;i++){
+                    ans+=(a[i]+carry[i/blk_sz])%mod;
+                    ans%=mod;
+                }
+                while(i+block-1<=r){
+                    ll index=i/block;
+                    // Now, we have to search in block no 'index'
+                    ans+=(v[i/blk_sz]+carry[i/blk_sz])%mod;
+                    ans%=mod;
+                    i+=block;
+                }
+                while(i<=r){
+                    ans+=(a[i]+carry[i/blk_sz])%mod;
+                    ans%=mod;
+                    i++;
+                }
+            }
+            cout<<ans<<endl;
+        }
+    }
+
+}
