@@ -89,8 +89,11 @@ void dfs(ll u){
             }
         }
     }
-    dp[u]+=1;
-    dp1[u]=1+first+second;
+    
+    dp[u]++;
+    if(first && second){
+        dp1[u]=2+first+second;
+    }
 }
 
 
