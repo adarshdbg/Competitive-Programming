@@ -6,6 +6,10 @@ using namespace std;
 #define mod (ll)(1e9+7)
 #define pp(T) pair<T,T>
 #define pb push_back
+#define read1(x) scanf("%d",&x)
+#define read2(x,y) scanf("%d%d",&x,&y)
+#define read3(3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define read4(a,b,c,d) scanf("%d%d%d%d",&a,&b,&c,&d)
 #define mp make_pair
 #define NN 100005
 #define IO ios_base::sync_with_stdio(NULL),cin.tie(0),cout.tie(0)
@@ -69,6 +73,7 @@ ll longest_balanced_parenthesis(string a,ll n){
 ll setup_k(ll *a,ll k){
   ordered_set x;
   // Now , insert and then check number of integers less than k by just using x.order_of_key(k+1)
+  return 0;
 }
 
 int main() {
