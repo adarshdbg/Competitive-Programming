@@ -8,7 +8,7 @@ using namespace std;
 #define pb push_back
 #define read1(x) scanf("%d",&x)
 #define read2(x,y) scanf("%d%d",&x,&y)
-#define read3(3(x,y,z) scanf("%d%d%d",&x,&y,&z)
+#define read3(x,y,z) scanf("%d%d%d",&x,&y,&z)
 #define read4(a,b,c,d) scanf("%d%d%d%d",&a,&b,&c,&d)
 #define mp make_pair
 #define NN 100005
