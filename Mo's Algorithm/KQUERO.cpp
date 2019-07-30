@@ -36,7 +36,7 @@ inline int div(ll a,ll b,ll m=0){
     if(m==0) return a/b;
     return ((a%m)*(powermod(a,b,m-2)%m))%m;
 }
- 
+  
 bool isopen(char c){
     return ((c=='(')||(c=='{')||(c=='['));
 }
