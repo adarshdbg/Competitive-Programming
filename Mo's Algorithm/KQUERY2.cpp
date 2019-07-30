@@ -35,7 +35,7 @@ int main()
         scanf("%d", &A[i]);
         update(i/BLOCK,A[i],1);
     }
-
+ 
     cin >> Q;
 
     while(Q--)
