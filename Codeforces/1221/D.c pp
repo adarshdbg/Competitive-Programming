@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+ 
+ 
+int dp[300001][4];
+ 
+int f(vector<pair<int,int>> &v,int &n,int pos,int prev){
+    if(pos==n){
+        return 0;
+    }
+    int &ans=dp[pos][prev];
+    if(ans!=-1){
+        return ans;
+    }
+    ans=(int)1e18 + 5;
+    if(pos)
+        prev=prev+v[pos-1].first;
+    if(1){
+        for(int k=1;k<4;k++)
+            if((k+v[pos].first)!=prev)
+                ans=min(ans,f(v,n,pos+1,k)+k*v[pos].second);
+    }
+    if(prev!=v[pos].first)
+        ans=min(ans,f(v,n,pos+1,0));
+    if(ans==((int)1e18 + 5))ans=0;
+    return ans;
+}
+ 
+signed main()
+{
+    
+    ios_base::sync_with_stdio(NULL);
+    cin.tie(0);
+    cout.tie(0);
+    
+    int q;
+    scanf("%lld",&q);
+    for(int i=0;i<q;i++){
+        int n;
+        scanf("%lld",&n);
+        vector<pair<int,int>> v(n);
+        for(int i=0;i<n;i++){
+            scanf("%lld%lld",&v[i].first,&v[i].second);
+        }
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<4;j++)dp[i][j]=-1;
+        }
+        
+        int a=f(v,n,0,0);
+        printf("%lld\n",a);
+    }
+    
+    
+    return 0;
+}
