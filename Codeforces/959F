@@ -1,42 +1,44 @@
-#include <iostream>
-#include <vector>
+#include<bits/stdc++.h>
 using namespace std;
-#define mod 1000000007
-vector<pair<int,int> > v[100005];
-int arr[100005],a[100005];
-vector<int> s;
-bool b[(1<<20)];
-int main()
-{
-	int n,q;
-	scanf("%d%d",&n,&q);
-	for (int i=0;i<n;i++)
-	scanf("%d",&arr[i]);
-	for (int i=0;i<q;i++)
-	{
-		int l,x;
-		scanf("%d%d",&l,&x);
-		v[l-1].push_back({x,i});
-	}
-	s.push_back(0);
-	b[0]=1;
-	int ans=1;
-	for (int i=0;i<n;i++)
-	{
-		if (b[arr[i]])
-		ans=(ans*2)%mod;
-		else
-		{
-			int tmp=s.size();
-			for (int x=0;x<tmp;x++)
-			{
-				s.push_back(s[x]^arr[i]);
-				b[s.back()]=1;
-			}
-		}
-		for (int x=0;x<v[i].size();x++)
-		a[v[i][x].second]=ans*b[v[i][x].first];
-	}
-	for (int i=0;i<q;i++)
-	printf("%d\n",a[i]);
+#define int long long 
+const int mod = 1e9+7;
+#define fast ios_base::sync_with_stdio(NULL),cin.tie(0),cout.tie(0);
+signed main(){
+  fast;
+  int n,q;
+  cin>>n>>q;
+  int a[n];
+  for(int i=0;i<n;i++)
+     cin>>a[i];
+  vector<pair<int,int>> v[n];
+  for(int i=0;i<q;i++){
+    int l,x;
+    cin>>l>>x;
+    v[l-1].push_back({x,i});
+  }
+  int c[q];
+  int ans=1;
+  
+  vector<int> s;
+  s.push_back(0);
+  int b[(1<<20)]{0};
+  b[0]=1;
+  for(int i=0;i<n;i++){
+    if(b[a[i]]){
+    	ans*=2;
+    	ans%=mod;
+    }
+    else{
+	int temp=s.size();
+	for(int ii=0;ii<temp;ii++)s.push_back(s[ii]^a[i]),b[s.back()]=1;
+    }
+    for(int j=0;j<v[i].size();j++){
+	    c[v[i][j].second]=(ans*b[v[i][j].first]);	
+    }
+  }
+
+  for(int i=0;i<q;i++){
+    cout<<c[i]<<"\n";
+  }
+ 
 }
